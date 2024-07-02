@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <title>Projeto Cronometro</title>
+        <style>
+
+            section.crono{
+            display: flex;
+             justify-content: center;
+             align-items: center;
+             width: 50%;
+             height: 50%;
+             left: 50px;
+             background-color: black;
+                            
+
+            }
+            .container{
+                text-align: center;
+                padding: 100px;
+                color: white;
+                
+            }
+
+            button{
+                background: black;
+                color: white;
+                font-size: 32px;
+                padding: 8px 20px;
+                cursor: pointer;
+                border: 3px solid;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="crono">
+        <audio id="sound" src="./alarme_js/alarm.mp3"></audio>
+
+        <div class="container">
+            <h2>minutos:</h2>
+            <select id="minutos" name="minutos"></select>
+
+            <h2>segundos:</h2>
+            <select id="segundos" name="segundos"></select>
+            <br>
+            <br>
+            <button id="comecar">Começar</button>
+
+            <div id="display">
+                <h3></h3>
+            </div>
+        </div>
+
+        <script>
+            var display = document.getElementById('display');
+            var minutos = document.getElementById('minutos');
+            var segundos = document.getElementById('segundos');
+            var sound = document.getElementById('sound');
+
+            var comecar = document.getElementById('comecar');
+
+            for(var i = 0; i <= 60; i++){
+                minutos.innerHTML+='<option value="'+i+'">'+i+'</option>';
+            }
+
+            for(var i = 0; i <= 60; i++){
+                segundos.innerHTML+='<option value="'+i+'">'+i+'</option>';
+            }
+
+            comecar.addEventListener('click', function() {
+                 var minutoAtual = minutos.value;
+                 var segundoAtual = segundos.value
+
+                 display.childNodes[1].innerHTML = minutoAtual + ';'+segundoAtual;
+
+                 var interval = setInterval(function(){
+
+                    segundoAtual--;
+                    if(segundoAtual <= 0){
+                        if(minutoAtual > 0){
+                            minutoAtual--;
+                            segundoAtual = 59;
+                        }else{
+                            alert("Acabou");
+                            sound.play();
+                            clearInterval(interval);
+                        }
+                    }
+
+                    display.childNodes[1].innerHTML = minutoAtual + ';'+segundoAtual;
+                 },1000);
+                
+            });
+        </script>
+</section>
+    </body>
+</html>
